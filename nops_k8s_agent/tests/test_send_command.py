@@ -9,7 +9,7 @@ from tests.conftest import EXAMPLE_RESPONSE
 
 @responses.activate
 @patch("nops_k8s_agent.container_cost.base_prom.PrometheusConnect.custom_query_range")
-@patch("nops_k8s_agent.container_cost.opencost.opencost_parquet_exporter.main_command")
+@patch("nops_k8s_agent.container_cost.nopscost.nopscost_parquet_exporter.main_command")
 def test_dumptos3(main_mock, mock_prom_conn):
     # mock s3.upload_file for test upload
     with patch("nops_k8s_agent.management.commands.dumptos3.boto3.client") as mock_s3:
@@ -21,4 +21,4 @@ def test_dumptos3(main_mock, mock_prom_conn):
 
         call_command("dumptos3")
         assert mock_prom_conn.called
-        assert mock_s3.return_value.upload_file.call_count == 8
+        assert mock_s3.return_value.upload_file.call_count == 9
